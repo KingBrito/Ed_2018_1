@@ -20,8 +20,10 @@ while(pilha.size() != 0) {//faz o processo enquanto não estiver vazia
             if (countOpen(mat,vizinhos) <=1 && mat.equals(vizinhos,PAREDE))
                 canpierce.push_back(vizinhos);
         }
+					   
 // Na pilha canpierce(do inglês "pode ser furado") alocado os locais a serem furados 
 // como ABERTO
+					   
     if (canpierce.size()!=0){
         int aux = rand() % canpierce.size();
         mat.get(canpierce[aux])=ABERTO;
@@ -29,11 +31,14 @@ while(pilha.size() != 0) {//faz o processo enquanto não estiver vazia
         mat_draw(mat);
         ed_show();
     }
+    
+    // se não poder ir por um caminho, volta alguns passos
+    
     else{
-// se não poder ir por um caminho, volta ao ponto de onde partiu
       pilha.pop_back();
         }
     }
+    
 ## O que aprendeu e sabe fazer  
 Aprendi a criar pilha e usar vector.
 
