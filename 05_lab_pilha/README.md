@@ -12,15 +12,16 @@ Para criar o labirinto eu criei uma pilha, o qual no codigo esta como "vector<Pa
 Uma pilha na programação, só pode retirar por onde colocou, então com esse conceito foi implementado essa parte do codigo:
 
 while(pilha.size() != 0) {//faz o processo enquanto não estiver vazia
-        vector<Par> canpierce;// cria uma pilha de lugares onde pode 				      //ser furado 
+        vector<Par> canpierce;// cria uma pilha de lugares onde pode ser furado 
         Par topo = pilha.back(); // a variavel que ira procurar pelos 
 				//  os lugares abertos
-        for(auto vizinhos: getNeib(topo)){// inseri os lugares abertos 						  // na pilha canpierce
+        for(auto vizinhos: getNeib(topo)){// inseri os lugares abertos 						  
+					// na pilha canpierce
             if (countOpen(mat,vizinhos) <=1 && mat.equals(vizinhos,PAREDE))
                 canpierce.push_back(vizinhos);
         }
-// A pilha canpierce(do inglês "pode ser furado") depois de ver os 
-// locais a serem furados marca como ABERTO
+// Na pilha canpierce(do inglês "pode ser furado") alocado os locais a serem furados 
+// como ABERTO
     if (canpierce.size()!=0){
         int aux = rand() % canpierce.size();
         mat.get(canpierce[aux])=ABERTO;
