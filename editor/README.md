@@ -1,5 +1,5 @@
 ## O que voc� fez  
-Fiz o backspace,delete e tentei o control z
+Fiz o backspace,delete e o control z, control r
 
 ## Com quem e como voc� fez  
 Fiz sozinho. 
