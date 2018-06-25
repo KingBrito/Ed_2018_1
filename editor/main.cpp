@@ -37,14 +37,16 @@ struct Ambiente{
 int main()
 {
     Ambiente amb;
-    Ambiente ctrlz;
-    Ambiente ctrlr;
-
     amb.texto.push_back('a');
     amb.texto.push_back('m');
     amb.texto.push_back('o');
     amb.texto.push_back('r');
-    
+
+    lista<Ambiente> ctrl;
+    lista<Ambiente>::iterator atual;
+    ctrl.push_back(amb);
+    atual = ctrl.begin();
+
     sf::RenderWindow janela(sf::VideoMode(800, 600), "Janela");
 
     while(janela.isOpen()){
@@ -59,64 +61,53 @@ int main()
             if(event.type == sf::Event::KeyPressed){
                 if(event.key.control && (event.key.code == sf::Keyboard::Z)){
                 		cout << "control z" << endl;
-                		
-						if ( ctrlz->texto->head == nullptr){
-							continue;
-						}
-						else{
-						amb.texto.insert(amb.cursor , ctrlz->texto->value);
-						ctrlr.push_back(ctrlz.end());
-						ctrlz.pop_back();
+                        if(atual == ctrl.end())
+                            atual--;
 
-						}
-    			    
                 }
                 else if(event.key.control && (event.key.code == sf::Keyboard::R)){
                         cout << "control r" << endl;
-                        if ( ctrlz->texto->head == nullptr){
-							continue;
-						}
-						else{
-						amb.texto.insert(amb.cursor , ctrlr->texto->value);
-						ctrlz.push_back(ctrlr.end());
-						ctrlr.pop_back();
-
-						}
+                        if (atual != --ctrl.end())
+                        atual++;
+                        
                 }
                  else if((event.key.code >= sf::Keyboard::A) &&
                    (event.key.code <= sf::Keyboard::Z)){
                     char tecla = (event.key.code - sf::Keyboard::A) + 'a';
                     cout << tecla << endl;// 'r' e 'z' não esta funcionando
-                    amb.texto.insert(amb.cursor,tecla);
+                    
+                    auto aux = atual;
+                    ctrl.erase( aux + 1, ctrl.end());
+                    ctrl.push_back(*atual);
+                    atual = ctrl.end();
+                    atual->texto.insert(atual->cursor,tecla);
                 }
                 else if((event.key.code == sf::Keyboard::Space)){
                     cout << "espaco" << endl;
-                    char espaco = ' ';
-                    atual.push_back(espaco);
-                    amb.texto.insert(amb.cursor,' ');
+                    atual->texto.insert(atual->cursor,' ');
                 }
                 else if(event.key.code == sf::Keyboard::BackSpace){
-                    if(amb.cursor != amb.texto.begin()){
-                    amb.texto.erase(amb.cursor++ ,amb.cursor--);
+                    if(atual->cursor != atual->texto.begin()){
+                    atual->texto.erase(atual->cursor++ ,atual->cursor--);
                     cout << "backspace" << endl;
                     }
                 }
                 else if(event.key.code == sf::Keyboard::Delete){
-                    if(amb.cursor != amb.texto.begin()){
-                    amb.texto.erase(amb.cursor--,amb.cursor++);
+                    if(atual->cursor != atual->texto.begin()){
+                    atual->texto.erase(atual->cursor--,atual->cursor++);
                     cout << "delete" << endl;
                     }
                 }
                 else if(event.key.code == sf::Keyboard::Left){
-                    if(amb.cursor != amb.texto.begin()){
-                        amb.cursor--;
+                    if(atual->cursor != atual->texto.begin()){
+                        atual->cursor--;
 
                     }
 
                 }
                 else if(event.key.code == sf::Keyboard::Right){
-                    if(amb.cursor != amb.texto.end()){
-                        amb.cursor++;
+                    if(atual->cursor != atual->texto.end()){
+                        atual->cursor++;
 
                     }
                 }
@@ -126,7 +117,7 @@ int main()
 
         auto pos = sf::Vector2f(30, 50);
         janela.clear();
-        janela.draw(sfText(pos, amb.toString(), sf::Color::White, 30));
+        janela.draw(sfText(pos, atual->toString(), sf::Color::White, 30));
         janela.display();
     }
     return 0;
